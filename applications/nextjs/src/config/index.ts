@@ -1,13 +1,13 @@
 
 export const config = {
-  self: 'http://127.0.0.1:4455',
+  self: 'http://id.kratos.com',
   kratos: {
-    browser: 'http://127.0.0.1:4433',
-    public: 'http://127.0.0.1:4433',
-    admin: 'http://127.0.0.1:4434',
+    browser: 'http://id.kratos.com/k/kratos',
+    public: 'http://kratos:4433',
+    admin: 'http://kratos:4434',
   },
   hydra: {
-    admin: 'http://localhost:4445',
+    admin: 'http://hydra:4445',
   },
 };
 

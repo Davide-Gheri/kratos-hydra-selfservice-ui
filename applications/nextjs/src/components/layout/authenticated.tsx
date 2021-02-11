@@ -35,7 +35,7 @@ export const AuthenticatedLayout: FC = ({ children }) => {
             </IconButton>
           </NextLink>
 
-          <NextLink href={new URL('/self-service/browser/flows/logout', config.kratos.public).toString()} passHref>
+          <NextLink href={new URL('/k/kratos/self-service/browser/flows/logout', config.kratos.browser).toString()} passHref>
             <IconButton component="a" color="inherit">
               <Tooltip title="Logout">
                 <ExitToApp/>

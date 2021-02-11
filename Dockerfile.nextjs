@@ -1,0 +1,37 @@
+FROM node:14-alpine as deps
+
+COPY applications/nextjs/package.json .
+COPY yarn.lock .
+
+ENV NODE_ENV=production
+
+RUN yarn install --prod --frozen-lockfile --ignore-optional
+
+FROM node:14-alpine as builder
+
+COPY applications/nextjs/package.json .
+COPY yarn.lock .
+
+RUN yarn install --frozen-lockfile
+
+COPY applications/nextjs/tsconfig.json .
+COPY applications/nextjs/next-env.d.ts .
+COPY applications/nextjs/src src
+
+ENV NODE_ENV=production
+
+RUN yarn build
+
+FROM node:14-alpine as prod
+
+RUN apk add --no-cache tini
+
+USER node
+
+COPY --chown=node:node --from=deps node_modules node_modules
+COPY --chown=node:node --from=builder package.json .
+COPY --chown=node:node --from=builder .next .next
+
+ENTRYPOINT ["/sbin/tini", "--", "./node_modules/.bin/next"]
+
+CMD ["start" ,"-p", "4455"]

@@ -4,12 +4,11 @@ dsn: memory
 
 serve:
   public:
-    base_url: http://127.0.0.1:4433/
+    base_url: http://id.kratos.com/k/kratos
     cors:
       enabled: true
       allowed_origins:
-        - http://127.0.0.1:4455
-        - http://localhost:4455
+        - http://id.kratos.com
       allowed_methods:
         - POST
         - GET
@@ -26,10 +25,9 @@ serve:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: http://127.0.0.1:4455/
+  default_browser_return_url: http://id.kratos.com/
   whitelisted_return_urls:
-    - http://127.0.0.1:4455
-    - http://127.0.0.1:4433
+    - http://id.kratos.com
 
   methods:
     password:
@@ -62,33 +60,33 @@ selfservice:
 
   flows:
     error:
-      ui_url: http://127.0.0.1:4455/error
+      ui_url: http://id.kratos.com/error
 
     settings:
-      ui_url: http://127.0.0.1:4455/settings
+      ui_url: http://id.kratos.com/settings
       privileged_session_max_age: 15m
 
     recovery:
       enabled: true
-      ui_url: http://127.0.0.1:4455/auth/recovery
+      ui_url: http://id.kratos.com/auth/recovery
 
     verification:
       enabled: true
-      ui_url: http://127.0.0.1:4455/auth/verify
+      ui_url: http://id.kratos.com/auth/verify
       after:
-        default_browser_return_url: http://127.0.0.1:4455/
+        default_browser_return_url: http://id.kratos.com/
 
     logout:
       after:
-        default_browser_return_url: http://127.0.0.1:4455/auth/login
+        default_browser_return_url: http://id.kratos.com/auth/login
 
     login:
-      ui_url: http://127.0.0.1:4455/auth/login
+      ui_url: http://id.kratos.com/auth/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: http://127.0.0.1:4455/auth/registration
+      ui_url: http://id.kratos.com/auth/registration
       after:
         password:
           hooks:

@@ -23,7 +23,7 @@ function loginUrl(baseReturnTo: string) {
   const state = crypto.randomBytes(48).toString('hex')
   const returnTo = new URL(baseReturnTo, config.self);
   returnTo.searchParams.set('hydra_login_state', state);
-  const redirectTo = new URL('/self-service/login/browser', config.kratos.browser);
+  const redirectTo = new URL('/k/kratos/self-service/login/browser', config.kratos.browser);
   // redirectTo.searchParams.set('refresh', 'true');
   redirectTo.searchParams.set('return_to', returnTo.toString());
 

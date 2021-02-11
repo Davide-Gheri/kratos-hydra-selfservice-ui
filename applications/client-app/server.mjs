@@ -3,7 +3,8 @@ import { AuthorizationCode } from 'simple-oauth2';
 
 const clientId = 'next-client';
 const clientSecret = 'secret';
-const hydraUrl = 'http://127.0.0.1:4444';
+const hydraUrl = 'http://hydra:4444';
+const clientHydraUrl = 'http://id.kratos.com';
 
 const scope = 'openid offline';
 const state = 'staticState';
@@ -16,14 +17,14 @@ const config = {
     auth: {
         tokenHost: hydraUrl,
         tokenPath: '/oauth2/token',
-        authorizeHost: hydraUrl,
-        authorizePath: '/oauth2/auth',
+        authorizeHost: clientHydraUrl,
+        authorizePath: '/k/hydra/oauth2/auth',
     },
 };
 
 const oauth2Client = new AuthorizationCode(config);
 
-const selfUrl = 'http://127.0.0.1:5550';
+const selfUrl = 'http://client.kratos-app.com';
 const redirectUri = new URL('/callback', selfUrl).toString();
 
 const app = express();

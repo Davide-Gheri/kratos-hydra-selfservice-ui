@@ -1,0 +1,11 @@
+node_modules
+docker-compose.yml
+package.json
+README.md
+start.sh
+.env
+.env.example
+config
+.ory
+.git
+.gitignore

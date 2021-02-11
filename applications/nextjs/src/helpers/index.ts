@@ -40,10 +40,10 @@ export function methodConfig (
  */
 export function contextHasFlow(context: GetServerSidePropsContext, flowName: FlowName) {
   const req = context.req;
-  const url = new URL(req.url, config.kratos.browser);
+  const url = new URL(req.url, config.self);
 
   if (!url.searchParams.has('flow')) {
-    return new URL(`/self-service/${flowName}/browser`, config.kratos.browser);
+    return new URL(`/k/kratos/self-service/${flowName}/browser`, config.kratos.browser);
   }
   return url.searchParams.get('flow');
 }
@@ -76,9 +76,9 @@ export function handleSoftError(flowName: FlowName) {
   return (error: Error | AxiosError) => {
     if (
       isAxiosError(error)
-      && [403, 404, 410].includes(error.response.status)
+      && [403, 404, 410].includes(error.response?.status)
     ) {
-      return new URL(`/self-service/${flowName}/browser`, config.kratos.browser).toString();
+      return new URL(`/k/kratos/self-service/${flowName}/browser`, config.kratos.browser).toString();
     }
     throw error;
   }

@@ -1,8 +1,16 @@
 import { createContext, FC, useCallback, useContext, useMemo, useState } from 'react';
-import { kratosPublic } from '../kratos';
 import { AxiosError } from 'axios';
+import { PublicApi, Configuration } from '@ory/kratos-client';
+import { config } from '../config';
 
 export type User = any;
+
+const kratosClientPublic = new PublicApi(new Configuration({
+  basePath: config.kratos.browser,
+  baseOptions: {
+    withCredentials: true,
+  },
+}));
 
 const AuthContext = createContext<{
   user: User | null,
@@ -18,12 +26,12 @@ export const AuthProvider: FC<{ onError: (err: AxiosError) => void }> = ({ child
   const [user, setUser] = useState<any>(null);
 
   const fetchUser = useCallback(() => {
-    return kratosPublic.whoami()
-    .then(({ data }) => {
-      setUser(data);
-      return data;
-    })
-    .catch(onError);
+    return kratosClientPublic.whoami()
+      .then(({ data }) => {
+        setUser(data);
+        return data;
+      })
+      .catch(onError);
   }, [onError, setUser]);
 
   const value = useMemo(() => ({

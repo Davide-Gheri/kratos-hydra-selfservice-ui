@@ -43,7 +43,9 @@ export function contextHasFlow(context: GetServerSidePropsContext, flowName: Flo
   const url = new URL(req.url, config.kratos.browser);
 
   if (!url.searchParams.has('flow')) {
-    return new URL(`/self-service/${flowName}/browser`, config.kratos.browser);
+    const destUrl = new URL(`/self-service/${flowName}/browser`, config.kratos.browser);
+    destUrl.search = url.search;
+    return destUrl;
   }
   return url.searchParams.get('flow');
 }

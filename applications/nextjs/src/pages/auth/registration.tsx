@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -12,7 +12,7 @@ import { GuestLayout } from '../../components/layout/guest';
 import { Kratos, RegistrationProps } from '../../kratos';
 import { asNextProps } from '../../helpers';
 
-export default function Registration({ password: passwordForm, oidc: oidcForm, messages }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Registration({ password: passwordForm, oidc: oidcForm, messages, returnTo }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user } = useAuth();
   const router = useRouter();
 
@@ -21,6 +21,13 @@ export default function Registration({ password: passwordForm, oidc: oidcForm, m
       router.replace('/');
     }
   }, [user, router]);
+
+  const loginUrl = useMemo(() => {
+    const urlParams = new URLSearchParams();
+    returnTo && urlParams.set('return_to', returnTo);
+
+    return `/auth/login?${urlParams.toString()}`;
+  }, [returnTo]);
 
   return (
     <GuestLayout>
@@ -35,7 +42,7 @@ export default function Registration({ password: passwordForm, oidc: oidcForm, m
           {oidcForm && <OidcForm form={oidcForm}/>}
           <Typography color="textSecondary">
             Already have an account?{' '}
-            <NextLink href="/auth/login" passHref>
+            <NextLink href={loginUrl} passHref>
               <Link>Login</Link>
             </NextLink>
           </Typography>

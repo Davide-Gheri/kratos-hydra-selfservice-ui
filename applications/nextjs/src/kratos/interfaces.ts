@@ -9,11 +9,13 @@ import {
 export interface LoginFlowWithMethod extends LoginFlow {
   password?: LoginFlowMethodConfig;
   oidc?: LoginFlowMethodConfig;
+  returnTo?: string;
 }
 
 export interface RegistrationFlowWithMethod extends RegistrationFlow {
   password?: RegistrationFlowMethodConfig;
   oidc?: RegistrationFlowMethodConfig;
+  returnTo?: string;
 }
 
 export interface VerificationFlowWithMethod extends VerificationFlow {

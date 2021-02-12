@@ -6,13 +6,13 @@ import { Form } from '../../components/form/form';
 import { FormMessages } from '../../components/form/messages';
 import { OidcForm } from '../../components/form/oidc-form';
 import { useAuth } from '../../contexts/auth.context';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { GuestLayout } from '../../components/layout/guest';
 import { Kratos, LoginProps } from '../../kratos';
 import { asNextProps } from '../../helpers';
 
-export default function Login({ password: passwordForm, oidc: oidcForm, messages }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Login({ password: passwordForm, oidc: oidcForm, messages, returnTo }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { user } = useAuth();
   const router = useRouter();
 
@@ -21,6 +21,13 @@ export default function Login({ password: passwordForm, oidc: oidcForm, messages
       router.replace('/');
     }
   }, [user, router]);
+
+  const registrationUrl = useMemo(() => {
+    const urlParams = new URLSearchParams();
+    returnTo && urlParams.set('return_to', returnTo);
+
+    return `/auth/registration?${urlParams.toString()}`;
+  }, [returnTo]);
 
   return (
     <GuestLayout>
@@ -41,7 +48,7 @@ export default function Login({ password: passwordForm, oidc: oidcForm, messages
           </Typography>
           <Typography color="textSecondary">
             No account?{' '}
-            <NextLink href="/auth/registration" passHref>
+            <NextLink href={registrationUrl} passHref>
               <Link>Register</Link>
             </NextLink>
           </Typography>

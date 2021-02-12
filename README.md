@@ -62,7 +62,3 @@ $ cd applications/client-app && yarn start
 
 Navigate to `http://localhost:5550` to view the Client application and perform the OAuth2 authorization flow with Hydra and Kratos as identity management system
 
-### TODO
-
-* OAuth2 flow works only for existing Kratos identities, it is not possible to `register` while performing the OAuth2 authorization flow
-* Example as React SPA without SSR

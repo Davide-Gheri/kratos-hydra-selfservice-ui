@@ -29,11 +29,16 @@ export class Kratos {
   static login(context: GetServerSidePropsContext) {
     return flowOrCallback(context, 'login', flowId =>
       kratosPublic.getSelfServiceLoginFlow(flowId)
-        .then(({ data }) => ({
-          ...data,
-          oidc: methodConfig(data, 'oidc'),
-          password: methodConfig(data, 'password'),
-        }))
+        .then(({ data }) => {
+          const requestedUrl = new URL(data.request_url);
+          const returnTo = requestedUrl.searchParams.get('return_to');
+          return {
+            ...data,
+            returnTo,
+            oidc: methodConfig(data, 'oidc'),
+            password: methodConfig(data, 'password'),
+          }
+        })
         .catch(handleSoftError('login')),
     );
   }
@@ -47,11 +52,16 @@ export class Kratos {
   static registration(context: GetServerSidePropsContext) {
     return flowOrCallback(context, 'registration', flowId =>
       kratosPublic.getSelfServiceRegistrationFlow(flowId)
-        .then(({ data }) => ({
-          ...data,
-          oidc: methodConfig(data, 'oidc'),
-          password: methodConfig(data, 'password'),
-        }))
+        .then(({ data }) => {
+          const requestedUrl = new URL(data.request_url);
+          const returnTo = requestedUrl.searchParams.get('return_to');
+          return {
+            ...data,
+            returnTo,
+            oidc: methodConfig(data, 'oidc'),
+            password: methodConfig(data, 'password'),
+          }
+        })
         .catch(handleSoftError('registration')),
     );
   }

@@ -36,7 +36,7 @@ function loginUrl(baseReturnTo: string) {
  * @param context
  */
 function createHydraSession(requestedScope: string[] = [], context: Session) {
-  const verifiableAddresses = context.identity.verifiable_addresses || []
+  const verifiableAddresses = context.identity.verifiable_addresses || [];
   if (
     requestedScope.indexOf('email') === -1 ||
     verifiableAddresses.length === 0
